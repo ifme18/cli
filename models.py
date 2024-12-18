@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship, declarative_base
 Base = declarative_base()
 
 class Branch(Base):
-    __tablename__ = "branches" 
+    __tablename__ = "Branch"  
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     location = Column(String, nullable=False)
@@ -17,12 +17,15 @@ class Branch(Base):
 
 
 class BankAccount(Base):
-    __tablename__ = "bank_accounts" 
+    __tablename__ = "BankAccounts"  
     id = Column(Integer, primary_key=True)
-    holdersname = Column(String, nullable=False)  
+    holdersname = Column(String, nullable=False)
     balance = Column(Float, default=0.0)
-    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=False)
 
+    
+    branch_id = Column(Integer, ForeignKey("Branch.id"), nullable=False)
+
+   
     branch = relationship("Branch", back_populates="accounts")
 
     def __repr__(self):
