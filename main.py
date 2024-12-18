@@ -1,7 +1,6 @@
-from sqlalchemy import create_engine, delete
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import BankBranch, Account
-
+from models import Branch, BankAccount
 
 DATABASE_URL = "sqlite:///bank.db"
 engine = create_engine(DATABASE_URL)
@@ -10,17 +9,17 @@ session = Session()
 
 def add_member():
     branch_id = int(input("Enter the bank branch ID: "))
-    account_holder = input("Enter the account holder's name: ")
+    holdersname = input("Enter the account holder's name: ")
     balance = float(input("Enter the starting balance: "))
-    new_account = Account(account_holder=account_holder, balance=balance, branch_id=branch_id)
+    new_account = BankAccount(holdersname=holdersname, balance=balance, branch_id=branch_id)
     session.add(new_account)
     session.commit()
-    print(f"Account created for {account_holder} with balance {balance}.")
+    print(f"Account created for {holdersname} with balance {balance}.")
 
 def update_balance():
     account_id = int(input("Enter the account ID: "))
     new_balance = float(input("Enter the new balance: "))
-    account = session.query(Account).filter_by(id=account_id).first()
+    account = session.query(BankAccount).filter_by(id=account_id).first()
     if account:
         account.balance = new_balance
         session.commit()
@@ -30,7 +29,7 @@ def update_balance():
 
 def delete_account():
     account_id = int(input("Enter the account ID to delete: "))
-    account = session.query(Account).filter_by(id=account_id).first()
+    account = session.query(BankAccount).filter_by(id=account_id).first()
     if account:
         session.delete(account)
         session.commit()
@@ -40,11 +39,11 @@ def delete_account():
 
 def view_members():
     branch_id = int(input("Enter the bank branch ID: "))
-    branch = session.query(BankBranch).filter_by(id=branch_id).first()
+    branch = session.query(Branch).filter_by(id=branch_id).first()
     if branch:
         print(f"Accounts in branch '{branch.name}':")
         for account in branch.accounts:
-            print(f"- ID: {account.id}, Holder: {account.account_holder}, Balance: {account.balance}")
+            print(f"- ID: {account.id}, Holder: {account.holdersname}, Balance: {account.balance}")
     else:
         print("Branch not found.")
 

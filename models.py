@@ -4,11 +4,12 @@ from sqlalchemy.orm import relationship, declarative_base
 Base = declarative_base()
 
 class Branch(Base):
-    __tablename__ = "Branch"
+    __tablename__ = "branches" 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     location = Column(String, nullable=False)
 
+    
     accounts = relationship("BankAccount", back_populates="branch", cascade="all, delete-orphan")
 
     def __repr__(self):
@@ -16,13 +17,13 @@ class Branch(Base):
 
 
 class BankAccount(Base):
-    __tablename__ = "BankAccounts"
+    __tablename__ = "bank_accounts" 
     id = Column(Integer, primary_key=True)
-    holdersname = Column(String, nullable=False)
+    holdersname = Column(String, nullable=False)  
     balance = Column(Float, default=0.0)
-    branch_id = Column(Integer, ForeignKey("Branch.id"), nullable=False)
-    
+    branch_id = Column(Integer, ForeignKey("branches.id"), nullable=False)
+
     branch = relationship("Branch", back_populates="accounts")
 
     def __repr__(self):
-        return f"BankAccount(id={self.id}, holdersname={self.holdersname}, branch={self.branch}, branch_id={self.branch_id})"
+        return f"BankAccount(id={self.id}, holdersname={self.holdersname}, balance={self.balance}, branch={self.branch})"
