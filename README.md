@@ -5,3 +5,7 @@ update on particular users
 Delete users 
 view users from a related branch id
 Delete a certain user
+
+
+
+The project utilises sqlalchemy alembic
