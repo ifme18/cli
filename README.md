@@ -1,65 +1,109 @@
+
+
 Bank CLI Application
 
 Overview
 
-The Bank CLI Application is a command-line tool for managing bank branches and accounts. It provides functionalities for creating branches, adding accounts, updating account balances, deleting accounts, and viewing account details within a branch. The application uses SQLite as the database and SQLAlchemy for ORM.
+The Bank CLI application is a command-line tool for managing bank branches and accounts. It provides functionality to create branches, add accounts, update account balances, delete accounts, transfer funds, and view account or branch details.
 
-Prerequisites
-
-Python 3.7+
-
-SQLite database
-
-SQLAlchemy library
-
-models.py file defining the Branch and BankAccount models
-
-Installation
-
-Clone or download the repository.
-
-Install the required dependencies:
-
-pip install sqlalchemy
-
-Ensure that the models.py file contains the following models:
-
-Branch: Represents a bank branch with attributes id, name, and location.
-
-BankAccount: Represents a bank account with attributes id, holdersname, balance, and branch_id (foreign key referencing Branch).
-
-Usage
-
-Run the application using the following command:
-
-python main.py
+This application is built using Python with SQLAlchemy for database operations and uses an SQLite database named bank.db.
 
 Features
 
-1. Create a New Branch
+Create a new branch: Add a new bank branch with a name and location.
 
-Allows the user to add a new bank branch by specifying its name and location.
+Add a new account: Add a new account to an existing branch with a holder's name and starting balance.
 
-Data is saved in the Branch table of the database.
+Update account balance: Modify the balance of an existing account.
 
-2. Add a New Account
+Delete an account: Remove an account from the database.
 
-Allows the user to create a new account by specifying the branch ID, account holder's name, and initial balance.
+View all members in a branch: List all accounts in a specific branch.
 
-Data is saved in the BankAccount table with a foreign key linking it to the branch.
+Transfer funds between accounts: Transfer money between two accounts.
 
-3. Update Account Balance
+View account details: Display details of a specific account.
 
-Updates the balance of an existing account by specifying the account ID and the new balance.
+View branch details: Display details of a specific branch, including its accounts.
 
-4. Delete an Account
+View total branch balance: Calculate and display the total balance of all accounts in a branch.
 
-Deletes an existing account by specifying the account ID.
+Exit: Close the application.
 
-5. View All Members in a Branch
+Prerequisites
 
-Lists all accounts within a specified branch by providing the branch ID.
+Python 3.7 or higher
 
-6. Exit
+SQLAlchemy library
 
-Exits the application.
+Setup
+
+Clone or download this repository.
+
+Install the required dependencies by running:
+
+pip install sqlalchemy
+
+Ensure the models.py file defines the following:
+
+A Branch class representing a bank branch.
+
+A BankAccount class representing bank accounts.
+
+A relationship between Branch and BankAccount (e.g., Branch.accounts to list all accounts in a branch).
+
+Create the SQLite database by running the SQLAlchemy models.
+
+Run the application using:
+
+python main.py
+
+Usage
+
+Follow the menu options displayed in the CLI to interact with the application.
+
+Enter the corresponding number for the desired operation.
+
+Provide the required details when prompted.
+
+Example Workflow
+
+Creating a Branch:
+
+Select option 1 from the menu.
+
+Enter the branch name and location.
+
+Adding an Account:
+
+Select option 2 from the menu.
+
+Provide the branch ID, holder's name, and starting balance.
+
+Transferring Funds:
+
+Select option 6 from the menu.
+
+Enter the sender account ID, receiver account ID, and transfer amount.
+
+Database Schema
+
+Branch
+
+id: Primary Key
+
+name: Branch name
+
+location: Branch location
+
+accounts: Relationship to BankAccount
+
+BankAccount
+
+id: Primary Key
+
+holdersname: Name of the account holder
+
+balance: Account balance
+
+branch_id: Foreign Key to Branch
